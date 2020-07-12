@@ -1,0 +1,10 @@
+Flask==1.1.2
+Flask-SQLAlchemy==2.4.1
+Flask-WTF==0.14.3
+gunicorn==20.0.4
+Jinja2==2.11.2
+names==0.3.0
+psycopg2==2.8.5
+psycopg2-binary==2.7.7
+WTForms==2.2.1
+flask-heroku==0.1.9

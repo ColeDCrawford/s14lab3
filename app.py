@@ -4,8 +4,12 @@ from modules.userform import UserForm
 import names
 import random
 
+# app = Flask(__name__)
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/usersdb'
+from flask_heroku import Heroku
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/usersdb'
+heroku = Heroku(app)
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = "s14a-key"
 db.init_app(app)
@@ -27,8 +31,16 @@ def index():
 def addUser():
     form = UserForm()
     if request.method == 'GET':
-        return render_template("adduser.html.j2", form=form)
-    else:
+        if request.args.get('first_name') is not None and request.args.get('age') is not None:
+            first_name = request.args.get('first_name')
+            age = request.args.get('age')
+            new_user = User(first_name=first_name, age=age)
+            db.session.add(new_user)
+            db.session.commit()
+            return redirect(url_for('index', success="User added!"))
+        else:
+            return render_template("adduser.html.j2", form=form)
+    if request.method == 'POST':
         if form.validate_on_submit():
             first_name = request.form['first_name']
             age = request.form['age']
