@@ -1,0 +1,61 @@
+{% extends "layout.html.j2" %}
+
+{% block title %}
+    Edit User
+{% endblock %}
+
+{% block js %}
+  <script src="../static/js/app.js"></script>
+{% endblock %}
+
+{% block body %}
+<h1>Edit user {{user.first_name}}:</h1>
+<form class="user-form">
+    <div class="user-form-group">
+        {{ form.first_name.label }}:
+        {{ form.first_name(value=user.first_name) }}
+        {% if form.first_name.errors %}
+            {% for error in form.first_name.errors %}
+                <p class="user-error-message">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="user-form-group">
+        {{ form.age.label }}:
+        {{ form.age(value=user.age) }}
+        {% if form.age.errors %}
+            {% for error in form.age.errors %}
+                <p class="user-error-message">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="user-form-submit">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateModal">
+        Update User
+      </button>
+    </div>
+</form>
+
+
+
+<!-- Modal - from https://getbootstrap.com/docs/4.0/components/modal/ -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateModalLabel">Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to update user #{{user.user_id}}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="update-user" data-user_id="{{user.user_id}}">Update User</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

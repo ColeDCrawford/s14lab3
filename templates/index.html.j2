@@ -1,0 +1,37 @@
+{% extends "layout.html.j2" %}
+
+{% block title %}
+  Home
+{% endblock %}
+
+{% block alert %}
+{% if error %}
+<div class="alert alert-warning" role="alert">
+  {{ error }}
+</div>
+{% endif %}
+{% if success %}
+<div class="alert alert-primary" role="alert">
+  {{ success }}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block body %}
+  <h1>Home</h1>
+  <h2>Users</h2>
+  <hr />
+  <div class="row">
+    {% for user in users %}
+      <div class="col-4" id="user-{{ user.user_id}}">
+        <h3 class="first-name">
+          <a href="{{url_for('user', user_id=user.user_id)}}">{{ user.first_name}}</a>
+        </h3>
+        <div class="attributes">
+          <div class="user-id">User Id: {{user.user_id}}</div>
+          <div class="age">Age: {{user.age}}</div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
